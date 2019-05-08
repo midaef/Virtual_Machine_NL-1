@@ -5,7 +5,7 @@
 #define NUMBER_OF_REGISTER 5
 
 int regs[NUMBER_OF_REGISTER];
-int build_vm[] = {0x1032, 0x11C8, 0x2201, 0x3202, 0x0000};
+int build_vm[] = {0x1032, 0x11C8, 0x2201, 0x3120, 0x4112, 0x5212, 0x0000};
 
 int counter = 0;
 int instrNum = 0;
@@ -13,7 +13,6 @@ int instrNum = 0;
 int r0 = 0;
 int r1 = 0;
 int r2 = 0;
-int r3 = 0;
 int imm = 0;
 
 int running = 1;
@@ -47,20 +46,28 @@ void statement_execution()
 			break;
 		case 1:
 			regs[r0] = imm;
-			printf("Writing r%d #%d\n", r0, imm);
+			printf("LOADI r%d #%d\n", r0, imm);
 			break;
 		case 2:
-			
 			regs[r0] = regs[r1] + regs[r2];
-			printf("SUM r%d r%d r%d\nResult: %d\n", r0, r1, r2, regs[r0]);
+			printf("ADD r%d r%d r%d\nResult: %d\n", r0, r1, r2, regs[r0]);
 			break;
 		case 3:
-			regs[r0] = regs[r2] - regs[r1];
+			regs[r0] = regs[r1] - regs[r2];
 			printf("SUB r%d r%d r%d\nResult: %d\n", r0, r1, r2, regs[r0]);
+			break;
+		case 4:
+			regs[r0] = regs[r1] * regs[r2];
+			printf("MULT r%d r%d r%d\nResult: %d\n", r0, r1, r2, regs[r0]);
+			break;
+		case 5:
+			regs[r0] = regs[r1] / regs[r2];
+			printf("DIV r%d r%d r%d\nResult: %d\n", r0, r1, r2, regs[r0]);
 			break;
 	}
 	printf("\n");
 }
+
 
 void start_vm()
 {
