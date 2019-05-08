@@ -5,7 +5,7 @@
 #define NUMBER_OF_REGISTER 5
 
 int regs[NUMBER_OF_REGISTER];
-int build_vm[] = {0x1032, 0x11C8, 0x2201, 0x3120, 0x4112, 0x5212, 0x0000};
+int build_vm[] = {0x1032, 0x11C8, 0x2201, 0x3120, 0x4112, 0x5212, 0x6000, 0x0000};
 
 int counter = 0;
 int instrNum = 0;
@@ -64,6 +64,12 @@ void statement_execution()
 			regs[r0] = regs[r1] / regs[r2];
 			printf("DIV r%d r%d r%d\nResult: %d\n", r0, r1, r2, regs[r0]);
 			break;
+		case 6:
+			for (int i = 0; i < NUMBER_OF_REGISTER; ++i)
+			{
+				regs[i] = 0;
+			}
+			printf("Reset memory comlited\n");
 	}
 	printf("\n");
 }
