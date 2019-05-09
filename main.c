@@ -1,6 +1,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "transferHex.h"
 
 #define NUMBER_OF_REGISTER 5
 
@@ -14,6 +16,9 @@ int r0 = 0;
 int r1 = 0;
 int r2 = 0;
 int imm = 0;
+
+unsigned int firstValue;
+unsigned int secondValue;
 
 int running = 1;
 
@@ -69,13 +74,13 @@ void statement_execution()
 			{
 				regs[i] = 0;
 			}
-			printf("Reset memory comlited\n");
+			printf("Reset memory done\n");
 	}
 	printf("\n");
 }
 
 
-void start_vm()
+void startVM()
 {
 	while (running)
 	{
@@ -86,13 +91,37 @@ void start_vm()
 }
 
 
+int checkRange()
+{
+	if (firstValue <= 255 && secondValue <= 255) return 1;
+	return 0;
+}
+
+
+void addInstructions()
+{
+	firstValue = hexreverse(F(firstValue));
+	secondValue = hexreverse(F(secondValue));
+	build_vm[0] = 0x1000 + firstValue;
+	build_vm[1] = 0x1100 + secondValue;
+}
+
+
 int main(int argc, char const *argv[])
 {
 	system("cls");
 	system("color 0a");
 	printf("%s\n", "Virtual Machine NL-1\n\n");
-	start_vm();
+	printf("%s\n", "Max value 255 for input");
+	printf("%s", "First number: ");
+	scanf("%u", &firstValue);
+	printf("%s", "Second number: ");
+	scanf("%u", &secondValue);	
+	if (checkRange() == 1)
+	{
+		addInstructions();
+		startVM();
+	} else printf("%s\n", "Error! Out of range >255");
 	system("pause > nul");
 	return 0;
 }
-
